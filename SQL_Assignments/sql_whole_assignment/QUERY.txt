@@ -1,0 +1,146 @@
+1)SELECT MAX(COUNTNO),PROJECT_ID 
+FROM(SELECT COUNT(EMP_ID) AS COUNTNO,PROJECT_ID 
+FROM ALLOCATION GROUP BY PROJECT_ID);
+
+2)SELECT EMP_ID,PROJECT_ID FROM ALLOCATION WHERE PROJECT_ID IS NULL 
+
+3)SELECT ROLE_ID,EMP_ID FROM ALLOCATION WHERE PROJECT_ID=3;
+
+4)SELECT MAX(HIGH),PROJECT_ID 
+FROM (SELECT SUM(AMOUNT_PER_DAY) 
+AS HIGH,PROJECT_ID 
+FROM ALLOCATION 
+GROUP BY PROJECT_ID);
+
+5)SELECT DISTINCT COUNT(EMP_ID) FROM ALLOCATION WHERE PROJECT_ID=1
+
+6)SELECT MIN(CHEAP),PROJECT_ID 
+FROM (SELECT SUM(AMOUNT_PER_DAY) 
+AS CHEAP,PROJECT_ID 
+FROM ALLOCATION WHERE TO_DATE=2012
+GROUP BY PROJECT_ID)
+
+7)SELECT EMP_ID,MAX(COUNTNO) AS MaxRolePlayed,SUM(TOTALAMOUNT) AS TotalSalary FROM(SELECT EMP_ID,COUNT(ROLE_ID) 
+AS COUNTNO,AMOUNT_PER_DAY AS TOTALAMOUNT 
+FROM ALLOCATION WHERE PROJECT_ID=3 GROUP BY EMP_ID)
+
+8)SELECT COUNT(PROJECT_ID) AS NoOfProject,EMP_NAME,MIN(HIRE_DATETIME) FROM EIGHT GROUP BY EMP_NAME LIMIT 1
+
+9)SELECT SUM(AMOUNT_PER_DAY),EMP_ID 
+FROM ALLOCATION WHERE PROJECT_ID IS NULL GROUP BY EMP_ID
+
+10)SELECT EMP_ID,COUNT(PROJECT_ID),TO_DATE FROM ALLOCATION GROUP BY EMP_ID
+
+11)SELECT SUM(COUNTNO) AS NoOfEmployees FROM(SELECT COUNT(EMP_ID) AS COUNTNO 
+FROM ALLOCATION 
+GROUP BY PROJECT_ID)
+ WHERE COUNTNO <=10
+
+12)SELECT COUNT(EMP_ID) AS NoOfEmployee FROM ALLOCATION 
+WHERE ROLE_ID=2 AND PROJECT_ID=4
+
+13)CREATE VIEW THIRTEEN AS
+SELECT * FROM ALLOCATION LEFT OUTER JOIN T_PROJECT 
+ON ALLOCATION.PROJECT_ID=T_PROJECT.PROJECT_ID
+SELECT CLIENT_NAME,COUNT(PROJECT_ID) AS NoOfProjects,PROJECT_ID 
+FROM THIRTEEN GROUP BY PROJECT_ID ORDER BY NoOfProjects DESC LIMIT 1
+
+14)select emp_id from allocation where project_id is null and from_date=10
+
+
+21)create view newview as
+select * from allocation left outer join t_project on allocation.project_id=t_project.project_id;
+select * from newview;
+select count(emp_id) as NoOfEmployees,project_name as ProjectName 
+from newview group by project_name;
+
+22)create view newviews as
+select * from allocation left outer join
+ role on allocation.role_id=role.role_id;
+ 
+select * from newviews;
+
+select count(emp_id) as NoOfEmployee,role_title as RoleName 
+from newviews group by role_title;
+
+23)create view new as
+select * from allocation left outer join employee 
+on employee.emp_id=allocation.emp_id; 
+select * from new;
+select emp_name as EmpName,count(project_id) 
+as NoOfProjects from new group by emp_name;
+
+24)create view new as
+select * from allocation left outer join employee 
+on employee.emp_id=allocation.emp_id; 
+select * from new;
+select emp_name as EmpName,count(role_id) 
+as NoOfRoles from new group by emp_name;
+
+25)create view twofive as
+select * from allocation left outer join role
+on role.role_id=allocation.role_id; 
+select * from twofive;
+select role_title as RoleName,count(emp_id) 
+as NoOfEmployees from twofive group by role_title;
+
+26)create view twofive as
+select * from allocation left outer join role
+on role.role_id=allocation.role_id; 
+select * from twofive;
+select role_title as RoleName,count(project_id) 
+as NoOfProjects from twofive group by role_title;
+
+27)create view twosix as
+select emp_name,role_title,project_id 
+from employee e inner join allocation a 
+on e.emp_id=a.emp_id inner join role r 
+on r.role_id=a.role_id;
+select * from twosix;
+select emp_name,role_title,count(project_id) from twosix group by emp_name;
+
+28)create view twoseven as
+select project_name,role_title,emp_id
+from t_project p inner join allocation a 
+on p.project_id=a.project_id inner join role r 
+on r.role_id=a.role_id;
+drop view if exists twoseven;
+select * from twoseven;
+select project_name as NameOfProject ,role_title as
+ RoleTitle,count(emp_id) as NoOfEmployee from twoseven group by project_name;
+
+29)create view twoeight as
+select emp_name,role_title,project_id 
+from employee e inner join allocation a 
+on e.emp_id=a.emp_id inner join role r 
+on r.role_id=a.role_id;
+drop view if exists twosix;
+select * from twoeight;
+select role_title as RoleName,emp_name as NameOfEmployee,count(project_id) 
+as NoOfProjects from twosix group by emp_name;
+
+30)select dept_id as DepartmentID,count(emp_id) as NoOfEmployee from department left outer join employee 
+on employee.dept_id=department.dept_id group by dept_name;
+
+31)SELECT MGR_ID,COUNT(EMP_ID) FROM EMPLOYEE GROUP BY MGR_ID;
+
+32)CREATE VIEW THIRTYTWO AS
+SELECT * FROM ALLOCATION A 
+INNER JOIN EMPLOYEE E ON E.EMP_ID=A.EMP_ID 
+INNER JOIN ROLE R ON R.ROLE_ID=A.ROLE_ID 
+INNER JOIN T_PROJECT P ON P.PROJECT_ID=A.PROJECT_ID; 
+SELECT EMP_NAME,ROLE_TITLE,PROJECT_NAME FROM THIRTYTWO;
+
+33)SELECT PROJECT_ID,EMP_ID,SUM(AMOUNT_PER_DAY) AS AMOUNT_COLLECTED FROM ALLOCATION 
+GROUP BY EMP_ID;
+
+34)SELECT EMP_ID,ROLE_ID,SUM(AMOUNT_PER_DAY) 
+AS AMOUNT_COLLECTED FROM ALLOCATION GROUP BY AMOUNT_PER_DAY
+
+35)SELECT EMP_ID,ROLE_ID,PROJECT_ID,SUM(AMOUNT_PER_DAY) 
+AS AMOUNT_COLLECTED FROM ALLOCATION GROUP BY AMOUNT_PER_DAY
+
+36)SELECT EMP_ID,MGR_ID,CASE WHEN MGR_ID IS NOT NULL THEN 'HAS MANAGER' 
+ELSE 'NO MANAGER'  END AS COMMENT FROM EMPLOYEE
+
+
